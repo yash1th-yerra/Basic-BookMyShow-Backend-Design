@@ -105,7 +105,7 @@ public class BookingService {
     }
 
     private double calculatePrice(List<Seat> selectedSeats, Show show){
-        return selectedSeats.stream().mapToDouble(Seat::getCategoryPrice).sum();
+        return selectedSeats.stream().mapToDouble(Seat::getCategoryPrice).sum() + (show.getShowPrice()*selectedSeats.size());
     }
 
     private synchronized void markSeatAsBooked(List<Seat> selectedSeats, Show show){

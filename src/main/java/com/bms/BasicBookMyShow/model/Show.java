@@ -1,5 +1,7 @@
 package com.bms.BasicBookMyShow.model;
 
+import com.bms.BasicBookMyShow.pricing.PricingStrategy;
+
 import java.time.LocalDateTime;
 
 public class Show {
@@ -14,11 +16,14 @@ public class Show {
 
     private Screen screen;
 
-    private double price;
+    private PricingStrategy pricingStrategy ;
 
-    public double getPrice() {
-        return price;
+    private static final double basePrice = 100.0;
+
+    public double getShowPrice(){
+        return pricingStrategy.calculatePrice(basePrice);
     }
+
 
     public Show(Movie movie, LocalDateTime startTime, LocalDateTime endTime, Screen screen) {
         this.id = IdGenerator.generateId();

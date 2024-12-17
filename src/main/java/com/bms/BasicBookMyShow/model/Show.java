@@ -14,6 +14,11 @@ public class Show {
 
     private Screen screen;
 
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
 
     public Show(Movie movie, LocalDateTime startTime, LocalDateTime endTime, Screen screen) {
         this.id = IdGenerator.generateId();
@@ -21,6 +26,7 @@ public class Show {
         this.startTime = startTime;
         this.endTime = endTime;
         this.screen = screen;
+
     }
 
     public String getId() {

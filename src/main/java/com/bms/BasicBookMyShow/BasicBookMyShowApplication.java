@@ -1,10 +1,17 @@
 package com.bms.BasicBookMyShow;
 
+import com.bms.BasicBookMyShow.addlFilter.DecFilter;
+import com.bms.BasicBookMyShow.addlFilter.GenreFilter;
+import com.bms.BasicBookMyShow.addlFilter.LocationFilter;
+import com.bms.BasicBookMyShow.addlFilter.PriceFilter;
 import com.bms.BasicBookMyShow.filter.Filter;
 import com.bms.BasicBookMyShow.filter.FilterManager;
 import com.bms.BasicBookMyShow.filter.MovieFilter;
 import com.bms.BasicBookMyShow.model.*;
 import com.bms.BasicBookMyShow.service.BookingService;
+import com.bms.BasicBookMyShow.sorter.SortManager;
+import com.bms.BasicBookMyShow.sorter.SortingStrategy;
+import com.bms.BasicBookMyShow.sorter.TimeShowSort;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -62,7 +69,8 @@ public class BasicBookMyShowApplication {
 			}
 		}
 
-
+		// default filter options
+		// strategy design pattern
 		Filter movieFilter = new MovieFilter("Pushpa-2");
 		FilterManager filterManager = new FilterManager();
 		filterManager.setFilter(movieFilter);
@@ -73,7 +81,25 @@ public class BasicBookMyShowApplication {
 		}
 
 
+		// multiple filtering options
+		//decorator design pattern
+		DecFilter locationFilter = new LocationFilter("Peddapuram");
+		DecFilter priceFilter = new PriceFilter(200,locationFilter);
+		DecFilter genreFilter = new GenreFilter("Action",priceFilter);
 
+		List<Show> multiFilteredShows = genreFilter.apply(new ArrayList<>(bookingService.getShows().values()));
+		for(Show multiFilteredShow : multiFilteredShows){
+			System.out.println(multiFilteredShow.getMovie().getTitle());
+		}
+
+		SortingStrategy sortingStrategy = new TimeShowSort();
+		SortManager sortManager = new SortManager(sortingStrategy);
+		List<Show> sortedShows = sortManager.getSortedShows(multiFilteredShows);
+//		List<Show> sortedShows = sortManager.getSortedShows(new ArrayList<>(bookingService.getShows().values()));
+
+		for(Show sortedShow : sortedShows){
+			System.out.println(sortedShow.getMovie().getTitle());
+		}
 
 	}
 }

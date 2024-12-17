@@ -1,5 +1,6 @@
-package com.bms.BasicBookMyShow.filter;
+package com.bms.BasicBookMyShow.addlFilter;
 
+import com.bms.BasicBookMyShow.filter.Filter;
 import com.bms.BasicBookMyShow.model.Seat;
 import com.bms.BasicBookMyShow.model.SeatStatus;
 import com.bms.BasicBookMyShow.model.Show;

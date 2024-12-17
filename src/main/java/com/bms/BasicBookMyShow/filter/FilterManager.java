@@ -7,6 +7,9 @@ import java.util.List;
 public class FilterManager {
     private Filter filterStrategy;
 
+    // but in this strategy pattern only one filter can be applied
+    // if we want to apply multiple filters then we can go for decorator pattern
+
     public void setFilter(Filter filterStrategy) {
         this.filterStrategy = filterStrategy;
     }

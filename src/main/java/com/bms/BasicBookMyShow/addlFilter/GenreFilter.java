@@ -1,11 +1,12 @@
-package com.bms.BasicBookMyShow.filter;
+package com.bms.BasicBookMyShow.addlFilter;
 
+import com.bms.BasicBookMyShow.filter.Filter;
 import com.bms.BasicBookMyShow.model.Show;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GenreFilter implements Filter{
+public class GenreFilter implements Filter {
     private final String genre;
 
     public GenreFilter(String  genre) {

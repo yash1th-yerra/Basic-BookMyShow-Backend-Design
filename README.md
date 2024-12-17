@@ -25,5 +25,6 @@ This low level design demonstrate the knowledge on low level system design while
 ##### further changes :
 1. integrating payment services using factory  and strategy design patterns.
 2. develop apis using spring boot.
+3. integrating database for free data flow and persistence
 
 

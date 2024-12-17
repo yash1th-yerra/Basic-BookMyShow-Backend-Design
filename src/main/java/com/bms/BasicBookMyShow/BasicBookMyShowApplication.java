@@ -1,11 +1,15 @@
 package com.bms.BasicBookMyShow;
 
+import com.bms.BasicBookMyShow.filter.Filter;
+import com.bms.BasicBookMyShow.filter.FilterManager;
+import com.bms.BasicBookMyShow.filter.MovieFilter;
 import com.bms.BasicBookMyShow.model.*;
 import com.bms.BasicBookMyShow.service.BookingService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -29,7 +33,16 @@ public class BasicBookMyShowApplication {
 		Show show1 = new Show(RRR,
 				LocalDateTime.of(2024,12,18,19,00),
 				LocalDateTime.of(2024,12,18,22,00),screen1);
+		Show show2 = new Show(pushpa2,
+				LocalDateTime.of(2024,12,19,19,00),
+				LocalDateTime.of(2024,12,19,22,00),screen1);
+		Show show3 = new Show(devara,
+				LocalDateTime.of(2024,12,20,19,00),
+				LocalDateTime.of(2024,12,20,22,00),screen1);
 
+		bookingService.addShow(show1);
+		bookingService.addShow(show2);
+		bookingService.addShow(show3);
 		User user1 = new User("Yashwanth","abcd@gmail.com");
 
 
@@ -48,5 +61,17 @@ public class BasicBookMyShowApplication {
 				bookingService.cancelBooking(booking.getId());
 			}
 		}
+
+
+		Filter movieFilter = new MovieFilter("Pushpa-2");
+		FilterManager filterManager = new FilterManager();
+		filterManager.setFilter(movieFilter);
+		List<Show> filteredShows = filterManager.applyFilter(new ArrayList<>(bookingService.getShows().values()));
+
+		for(Show filteredShow: filteredShows){
+			System.out.println(filteredShow.getMovie().getTitle());
+		}
+
+
 	}
 }

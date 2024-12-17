@@ -14,7 +14,7 @@ public class Multiplex {
     private List<Screen> screens;
 
     public Multiplex(String name, String location) {
-        this.id = IdGenerator.generateMovieId(name);
+        this.id = IdGenerator.generateId();
         this.name = name;
         this.location = location;
         this.screens = new ArrayList<>();

@@ -14,7 +14,7 @@ public class Movie {
     private int duration;
 
     public Movie(String title, String language, String genre, String releaseDate, int duration) {
-        this.id = IdGenerator.generateMovieId(title);
+        this.id = IdGenerator.generateId();
         this.title = title;
         this.language = language;
         this.genre = genre;

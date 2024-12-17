@@ -25,6 +25,10 @@ public class BookingService {
         this.bookings = new HashMap<>();
     }
 
+    public Map<String, Show> getShows() {
+        return shows;
+    }
+
     public static synchronized BookingService getInstance(){
         if(instance ==null){
             instance = new BookingService();
@@ -59,7 +63,7 @@ public class BookingService {
 
     }
 
-    public Booking bookTicket(User user, Show show,List<Seat> selectedSeats){
+    public synchronized Booking bookTicket(User user, Show show,List<Seat> selectedSeats){
         // check if seats are available
         if(areSeatsAvailable(selectedSeats,show)){
             // if yes change status of seat to  BOOKED and book that seat
@@ -76,14 +80,14 @@ public class BookingService {
 
     }
 
-    public void confirmBooking(String bookingId){
+    public synchronized void confirmBooking(String bookingId){
         Booking booking = bookings.get(bookingId);
         if(booking.getBookingStatus()==BookingStatus.PENDING){
             booking.setBookingStatus(BookingStatus.CONFIRMED);
         }
         System.out.println(" Booking Confirmed");
     }
-    public void cancelBooking(String bookingId){
+    public synchronized void cancelBooking(String bookingId){
         Booking booking = bookings.get(bookingId);
         if(booking.getBookingStatus()==BookingStatus.CONFIRMED){
             booking.setBookingStatus(BookingStatus.CANCELLED);
@@ -93,7 +97,7 @@ public class BookingService {
     }
 
 
-    private void markSeatAsAvailable(List<Seat> selectedSeats,Show show){
+    private synchronized void markSeatAsAvailable(List<Seat> selectedSeats,Show show){
         for(Seat seat : selectedSeats){
             Seat showSeat  = show.getScreen().getSeats().get(seat.getSeatNumber());
             showSeat.setSeatStatus(SeatStatus.AVAILABLE);
@@ -104,14 +108,14 @@ public class BookingService {
         return selectedSeats.stream().mapToDouble(Seat::getCategoryPrice).sum();
     }
 
-    private void markSeatAsBooked(List<Seat> selectedSeats, Show show){
+    private synchronized void markSeatAsBooked(List<Seat> selectedSeats, Show show){
         for(Seat seat : selectedSeats){
             Seat showSeat  = show.getScreen().getSeats().get(seat.getSeatNumber());
             showSeat.setSeatStatus(SeatStatus.BOOKED);
         }
     }
 
-    private boolean areSeatsAvailable(List<Seat> selectedSeats,Show show){
+    private  boolean areSeatsAvailable(List<Seat> selectedSeats,Show show){
         for(Seat seat : selectedSeats){
             Seat showSeat  = show.getScreen().getSeats().get(seat.getSeatNumber());
             if(showSeat.getSeatStatus()!=SeatStatus.AVAILABLE){

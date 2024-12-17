@@ -7,7 +7,5 @@ public class IdGenerator {
         return UUID.randomUUID().toString();
 
     }
-    public static String generateMovieId(String name){
-        return UUID.fromString(name).toString();
-    }
+
 }

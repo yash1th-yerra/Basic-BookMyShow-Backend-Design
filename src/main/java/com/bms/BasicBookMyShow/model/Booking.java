@@ -10,8 +10,13 @@ public class Booking {
     private List<Seat> reservedSeats;
     private double totalAmount;
     private BookingStatus bookingStatus;
+    private Payment payment;
 
-    public Booking( User user, Show show, List<Seat> reservedSeats, double totalAmount) {
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Booking(User user, Show show, List<Seat> reservedSeats, double totalAmount) {
         this.id = IdGenerator.generateId();
         this.user = user;
         this.show = show;

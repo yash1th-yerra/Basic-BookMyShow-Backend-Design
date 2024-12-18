@@ -1,6 +1,7 @@
 package com.bms.BasicBookMyShow.service;
 
 import com.bms.BasicBookMyShow.model.*;
+import com.bms.BasicBookMyShow.payment.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,8 @@ public class BookingService {
     private final Map<String, Booking> bookings;
 
     private static BookingService instance;
+
+    private PaymentService paymentService;
 
     private BookingService() {
         this.movies = new ArrayList<>();
@@ -62,17 +65,26 @@ public class BookingService {
         return avlSeats;
 
     }
+    public void addObserversToPaymentNotification(PaymentObserver paymentObserver){
+        paymentService.addObservers(paymentObserver);
+    }
 
-    public synchronized Booking bookTicket(User user, Show show,List<Seat> selectedSeats){
+    public synchronized Booking bookTicket(User user, Show show,List<Seat> selectedSeats,PaymentMethod paymentMethod){
         // check if seats are available
         if(areSeatsAvailable(selectedSeats,show)){
+
             // if yes change status of seat to  BOOKED and book that seat
             markSeatAsBooked(selectedSeats,show);
+
             // price
 
             double price = calculatePrice(selectedSeats,show);
             Booking booking = new Booking(user,show,selectedSeats,price);
             bookings.put(booking.getId(),booking);
+            PaymentStrategy paymentStrategy = PaymentStrategyFactory.getPaymentStrategy(paymentMethod);
+            paymentService.setPaymentStrategy(paymentStrategy);
+            Payment payment = paymentService.processServicePayment(price);
+            booking.setPayment(payment);
             return booking;
         }
         return null;

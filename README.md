@@ -26,6 +26,7 @@ The BookMyShow system is a ticket booking platform that allows users to search f
 ### 2. **Multiplex Screens**
 - Each **Multiplex** contains multiple **Screens**.
 - Each **Screen** has a set of **Seats** with specific types (e.g., Regular, Premium) and prices.
+
 ![multiplexHierarchy](https://github.com/user-attachments/assets/4bb7f1dd-334b-4ecb-ad2d-4732c3f33f54)
 
 
@@ -107,20 +108,13 @@ Payment Strategy and Pricing Strategy are implemented using the **Strategy Patte
   - **Movie Filter**: Filters shows based on selected movies.
   - **Multiplex Filter**: Filters shows based on selected multiplexes.
   - **Region Filter**: Filters shows based on selected regions.
+
 ![filtering](https://github.com/user-attachments/assets/1c83ec3e-9488-42ca-b1f6-c4bdb5d8669f)
 
 
 
-
-
-
-
-
-
-
-
-
-
+** Design Patterns Covered in this LLD are documented here:
+[Design-Patterns-ReadMe](https://github.com/yash1th-yerra/BookMyShow-Backend-Design/blob/main/DesignPatternsReadme.md)
 
 
 
